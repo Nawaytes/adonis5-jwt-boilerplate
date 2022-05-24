@@ -1,7 +1,7 @@
-import { schema, CustomMessages, rules } from '@ioc:Adonis/Core/Validator'
+import { schema, CustomMessages } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
-export default class CreateAuthUserValidator {
+export default class GenerateTokenJwtValidator {
   constructor(protected ctx: HttpContextContract) {}
 
   /*
@@ -24,17 +24,8 @@ export default class CreateAuthUserValidator {
    *    ```
    */
   public schema = schema.create({
-    username: schema.string([
-      rules.trim(),
-      rules.minLength(3),
-      rules.maxLength(50),
-      rules.unique({ table: 'authentications', column: 'username' }),
-    ]),
-    secret: schema.string([
-      rules.minLength(8),
-      rules.maxLength(255),
-      rules.regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/),
-    ]),
+    username: schema.string([]),
+    secret: schema.string([]),
   })
 
   /**
@@ -48,15 +39,5 @@ export default class CreateAuthUserValidator {
    * }
    *
    */
-  public messages: CustomMessages = {
-    'username.required': 'Username is required',
-    'username.minLength': 'Username must be at least 3 characters',
-    'username.maxLength': 'Username must be at most 50 characters',
-    'username.unique': 'Username already exists',
-    'secret.required': 'Secret is required',
-    'secret.minLength': 'Secret must be at least 8 characters',
-    'secret.maxLength': 'Secret must be at most 255 characters',
-    'secret.regex':
-      'secret must contain at least one uppercase letter, one lowercase letter and one number',
-  }
+  public messages: CustomMessages = {}
 }
