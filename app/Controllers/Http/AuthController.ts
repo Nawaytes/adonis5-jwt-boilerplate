@@ -30,7 +30,6 @@ export default class AuthController {
       })
       return response.status(HTTP_STATUS_OK).send(token)
     } catch (error) {
-      console.log(error)
       processErrorResponse(error)
     }
   }

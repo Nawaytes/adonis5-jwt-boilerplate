@@ -20,7 +20,8 @@
     "rules": {
       "prettier/prettier": [
         "error"
-      ]
+      ],
+      "no-console": "warn"
     }
   },
   "eslintIgnore": [
