@@ -8,7 +8,7 @@ import { SoftDeletes } from '@ioc:Adonis/Addons/LucidSoftDeletes'
 export const EXCEPTION_AREA_ID_NOT_FOUND = 'area.id.not_found'
 export const MESSAGE_CREDENTIAL_CREATED = 'credential.is.created'
 
-export default class authentication extends compose(BaseModel, SoftDeletes) {
+export default class Authentication extends compose(BaseModel, SoftDeletes) {
   @column({ prepare: (value: string) => (value ? value : v4()) })
   public id: string
 
@@ -33,14 +33,14 @@ export default class authentication extends compose(BaseModel, SoftDeletes) {
   public updatedAt: DateTime
 
   @beforeSave()
-  public static async hashPassword(authentication: authentication) {
+  public static async hashPassword(authentication: Authentication) {
     if (authentication.$dirty.password) {
       authentication.password = await Hash.make(authentication.password)
     }
   }
 
   @beforeCreate()
-  public static async createUUID(model: authentication) {
+  public static async createUUID(model: Authentication) {
     model.id = v4()
   }
 }

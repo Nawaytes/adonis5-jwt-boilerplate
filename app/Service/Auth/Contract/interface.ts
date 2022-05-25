@@ -1,11 +1,11 @@
 import { AuthContract } from '@ioc:Adonis/Addons/Auth'
 
-export interface createCredentialUserContract {
+export interface CreateCredentialUserContract {
   username: string
   password: string
 }
 
-export interface generateTokenJTWContract {
+export interface GenerateTokenJTWContract {
   auth: AuthContract
   username: string
   secret: string

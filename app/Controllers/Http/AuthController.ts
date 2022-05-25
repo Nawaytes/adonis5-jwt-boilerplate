@@ -42,8 +42,8 @@ export default class AuthController {
 
   public async destroy({ params, response }: HttpContextContract) {
     try {
-      const user_id = params.id
-      await this.service.destroyCredential(user_id)
+      const userId = params.id
+      await this.service.destroyCredential(userId)
       return response.status(HTTP_STATUS_NO_CONTENT).send(null)
     } catch (error) {
       processErrorResponse(error)

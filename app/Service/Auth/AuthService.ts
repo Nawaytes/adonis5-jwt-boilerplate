@@ -1,15 +1,15 @@
-import { createCredentialUserContract, generateTokenJTWContract } from './Contract/interface'
+import { CreateCredentialUserContract, GenerateTokenJTWContract } from './Contract/interface'
 import Database from '@ioc:Adonis/Lucid/Database'
-import authentication from '../../Models/authentication'
+import Authentication from 'App/Models/authentication'
 import { JWTTokenContract } from '@ioc:Adonis/Addons/Jwt'
 import Hash from '@ioc:Adonis/Core/Hash'
 import { v4 } from 'uuid'
 
 export default class AuthService {
-  public async createCredentialUser(input: createCredentialUserContract): Promise<authentication> {
+  public async createCredentialUser(input: CreateCredentialUserContract): Promise<Authentication> {
     try {
       await Database.beginGlobalTransaction()
-      const credential = await authentication.create(input)
+      const credential = await Authentication.create(input)
       await Database.commitGlobalTransaction()
       return credential
     } catch (error) {
@@ -21,7 +21,7 @@ export default class AuthService {
   public async destroyCredential(user_id: string): Promise<void> {
     try {
       await Database.beginGlobalTransaction()
-      const credential = await authentication.query().where('id', user_id).firstOrFail()
+      const credential = await Authentication.query().where('id', user_id).firstOrFail()
       await credential.delete()
       await Database.commitGlobalTransaction()
     } catch (error) {
@@ -30,13 +30,12 @@ export default class AuthService {
     }
   }
   public async generateTokenJWT(
-    input: generateTokenJTWContract
-  ): Promise<JWTTokenContract<authentication>> {
+    input: GenerateTokenJTWContract
+  ): Promise<JWTTokenContract<Authentication>> {
     try {
       await Database.beginGlobalTransaction()
       const { auth, username, secret } = input
-      const credential = await authentication
-        .query()
+      const credential = await Authentication.query()
         .where({
           username,
         })
