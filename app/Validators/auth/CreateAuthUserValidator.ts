@@ -26,7 +26,7 @@ export default class CreateAuthUserValidator {
   public schema = schema.create({
     username: schema.string([
       rules.trim(),
-      rules.minLength(3),
+      rules.minLength(5),
       rules.maxLength(50),
       rules.unique({ table: 'authentications', column: 'username' }),
     ]),
@@ -50,7 +50,7 @@ export default class CreateAuthUserValidator {
    */
   public messages: CustomMessages = {
     'username.required': 'Username is required',
-    'username.minLength': 'Username must be at least 3 characters',
+    'username.minLength': 'Username must be at least 5 characters',
     'username.maxLength': 'Username must be at most 50 characters',
     'username.unique': 'Username already exists',
     'secret.required': 'Secret is required',

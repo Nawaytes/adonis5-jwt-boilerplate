@@ -1,10 +1,10 @@
 import { CreateCredentialUserContract, GenerateTokenJTWContract } from './Contract/interface'
 import Database from '@ioc:Adonis/Lucid/Database'
-import Authentication from 'App/Models/authentication'
+import Authentication, { EXCEPTION_USER_INVALID_CREDENTIAL } from 'App/Models/authentication'
 import { JWTTokenContract } from '@ioc:Adonis/Addons/Jwt'
 import Hash from '@ioc:Adonis/Core/Hash'
 import { v4 } from 'uuid'
-
+import AuthInvalidCredentialException from 'App/Exceptions/AuthInvalidCredential/AuthInvalidCredentialException'
 export default class AuthService {
   public async createCredentialUser(input: CreateCredentialUserContract): Promise<Authentication> {
     try {
@@ -50,7 +50,10 @@ export default class AuthService {
         await Database.commitGlobalTransaction()
         return token
       }
-      throw new Error('Invalid credentials')
+      throw new AuthInvalidCredentialException(
+        'Credential is Invalid',
+        EXCEPTION_USER_INVALID_CREDENTIAL
+      )
     } catch (error) {
       await Database.rollbackGlobalTransaction()
       throw error

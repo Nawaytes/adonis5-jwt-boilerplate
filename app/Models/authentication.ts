@@ -7,6 +7,7 @@ import { SoftDeletes } from '@ioc:Adonis/Addons/LucidSoftDeletes'
 
 export const EXCEPTION_AREA_ID_NOT_FOUND = 'area.id.not_found'
 export const MESSAGE_CREDENTIAL_CREATED = 'credential.is.created'
+export const EXCEPTION_USER_INVALID_CREDENTIAL = 'user.invalid.credential'
 
 export default class Authentication extends compose(BaseModel, SoftDeletes) {
   @column({ prepare: (value: string) => (value ? value : v4()) })
