@@ -2,6 +2,7 @@
 
 ## How to run
 - `npm i`
+- cp .env.example .env
 - `node ace migrate:run`
 - `node ace serve -w`
 
