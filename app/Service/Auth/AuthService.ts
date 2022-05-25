@@ -21,7 +21,7 @@ export default class AuthService {
   public async destroyCredential(user_id: string): Promise<void> {
     try {
       await Database.beginGlobalTransaction()
-      const credential = await authentication.query().where('uuid', user_id).firstOrFail()
+      const credential = await authentication.query().where('id', user_id).firstOrFail()
       await credential.delete()
       await Database.commitGlobalTransaction()
     } catch (error) {
@@ -34,7 +34,6 @@ export default class AuthService {
   ): Promise<JWTTokenContract<authentication>> {
     try {
       await Database.beginGlobalTransaction()
-      console.log(input)
       const { auth, username, secret } = input
       const credential = await authentication
         .query()
@@ -42,8 +41,6 @@ export default class AuthService {
           username,
         })
         .firstOrFail()
-      console.log(JSON.stringify(credential))
-      // console.log(await Hash.verify(secret, credential.password))
       if (await Hash.verify(credential.password, secret)) {
         const token = await auth.use('jwt').login(credential, {
           payload: {

@@ -5,8 +5,8 @@ export default class AuthenticationsSchema extends BaseSchema {
 
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id').primary()
-      table.uuid('uuid').notNullable().unique()
+      // table.increments('id').primary()
+      table.uuid('id').notNullable().primary()
       table.string('username', 255).notNullable()
       table.string('password', 180).notNullable()
       table.string('remember_me_token').nullable()

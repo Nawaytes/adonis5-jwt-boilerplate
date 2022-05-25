@@ -9,13 +9,13 @@ export const EXCEPTION_AREA_ID_NOT_FOUND = 'area.id.not_found'
 export const MESSAGE_CREDENTIAL_CREATED = 'credential.is.created'
 
 export default class authentication extends compose(BaseModel, SoftDeletes) {
-  @column({ isPrimary: true })
-  public id: number
+  @column({ prepare: (value: string) => (value ? value : v4()) })
+  public id: string
 
-  @column({
-    prepare: (value: string) => (value ? value : v4()),
-  })
-  public uuid: string
+  // @column({
+  //   prepare: (value: string) => (value ? value : v4()),
+  // })
+  // public uuid: string
 
   @column()
   public username: string
@@ -41,6 +41,6 @@ export default class authentication extends compose(BaseModel, SoftDeletes) {
 
   @beforeCreate()
   public static async createUUID(model: authentication) {
-    model.uuid = v4()
+    model.id = v4()
   }
 }
